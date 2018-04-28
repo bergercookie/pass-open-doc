@@ -12,7 +12,7 @@
 # Created by argbash-init v2.6.1
 # Rearrange the order of options below according to what you would like to see in the help message.
 # ARG_OPTIONAL_SINGLE([gpg_id],[g],[gpg-id to use.],[$HOME/.password-store/.gpg-id])
-# ARG_POSITIONAL_SINGLE([input-file],[i],[gpg-encrypted file to open. You can either use the full path to the file or just the name of the pass-stored item])
+# ARG_POSITIONAL_SINGLE([input-file],[gpg-encrypted file to open. You can either use the full path to the file or just the name of the pass-stored item])
 # ARG_HELP([Open a gpg-encrypted, optionally pass-stored, file])
 # ARGBASH_GO()
 # needed because of Argbash --> m4_ignore([
@@ -41,15 +41,14 @@ begins_with_short_option()
 
 # THE DEFAULTS INITIALIZATION - POSITIONALS
 _positionals=()
-_arg_input_file="gpg-encrypted file to open. You can either use the full path to the file or just the name of the pass-stored item"
 # THE DEFAULTS INITIALIZATION - OPTIONALS
 _arg_gpg_id="$HOME/.password-store/.gpg-id"
 
 print_help ()
 {
 	printf '%s\n' "Open a gpg-encrypted, optionally pass-stored, file"
-	printf 'Usage: %s [-g|--gpg_id <arg>] [-h|--help] [<input-file>]\n' "$0"
-	printf '\t%s\n' "<input-file>: i (default: 'gpg-encrypted file to open. You can either use the full path to the file or just the name of the pass-stored item')"
+	printf 'Usage: %s [-g|--gpg_id <arg>] [-h|--help] <input-file>\n' "$0"
+	printf '\t%s\n' "<input-file>: gpg-encrypted file to open. You can either use the full path to the file or just the name of the pass-stored item"
 	printf '\t%s\n' "-g, --gpg_id: gpg-id to use. (default: '$HOME/.password-store/.gpg-id')"
 	printf '\t%s\n' "-h, --help: Prints help"
 }
@@ -90,7 +89,9 @@ parse_commandline ()
 
 handle_passed_args_count ()
 {
-	test ${#_positionals[@]} -le 1 || _PRINT_HELP=yes die "FATAL ERROR: There were spurious positional arguments --- we expect between 0 and 1, but got ${#_positionals[@]} (the last one was: '${_positionals[*]: -1}')." 1
+	_required_args_string="'input-file'"
+	test ${#_positionals[@]} -ge 1 || _PRINT_HELP=yes die "FATAL ERROR: Not enough positional arguments - we require exactly 1 (namely: $_required_args_string), but got only ${#_positionals[@]}." 1
+	test ${#_positionals[@]} -le 1 || _PRINT_HELP=yes die "FATAL ERROR: There were spurious positional arguments --- we expect exactly 1 (namely: $_required_args_string), but got ${#_positionals[@]} (the last one was: '${_positionals[*]: -1}')." 1
 }
 
 assign_positional_args ()
@@ -140,15 +141,12 @@ else
     print_fatal_msg "Unknown platform \($(uname)\)"
 fi
 
-# Verify that the path exists
-# set fpath
+# find the correct path to the file
 fpath_potential_full="$root/$_arg_input_file.gpg"
 if [ -f "$_arg_input_file" ]; then
   fpath="$_arg_input_file"
-  echo "pass-open-doc.in.sh:55 DEBUGGING STRING ==> 2"
 elif [ -f "$fpath_potential_full" ]; then
   fpath="$fpath_potential_full"
-  echo "pass-open-doc.in.sh:58 DEBUGGING STRING ==> 3"
 else
   echo "fpath_potential_full:  ${fpath_potential_full}"
     print_fatal_msg "Neither \"$_arg_input_file\" or \"$fpath_potential_full\" exist."

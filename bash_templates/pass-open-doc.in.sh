@@ -13,7 +13,7 @@
 exit 11  #)Created by argbash-init v2.6.1
 # Rearrange the order of options below according to what you would like to see in the help message.
 # ARG_OPTIONAL_SINGLE([gpg_id], [g], [gpg-id to use.], [$HOME/.password-store/.gpg-id])
-# ARG_POSITIONAL_SINGLE([input-file], [i], [gpg-encrypted file to open. You can either use the full path to the file or just the name of the pass-stored item])
+# ARG_POSITIONAL_SINGLE([input-file], [gpg-encrypted file to open. You can either use the full path to the file or just the name of the pass-stored item])
 # ARG_HELP([Open a gpg-encrypted, optionally pass-stored, file])
 # ARGBASH_GO
 

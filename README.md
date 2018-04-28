@@ -7,6 +7,8 @@ Utility scripts for the [Pass Unix Manager](https://www.passwordstore.org/)
 * pass-open-doc - Script for decrypting and viewing docs stored in the Pass Unix
     Password Manager.
 * **[WIP]** pass-import-from-evernote
+  * https://github.com/evernote/evernote-sdk-python3
+  * https://github.com/evernote/evernote-sdk-python
 
 
 ## Contributing
@@ -19,3 +21,4 @@ edit the template files located under `bash_templates/`. Then use the
 ```sh
 ./helpers/generate_bash_scripts.sh && ./pass-open-doc <file-to-decrypt>
 ```
+
