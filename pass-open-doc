@@ -167,7 +167,14 @@ open_prog=$(echo "$open_prog_raw" | sed 's/\..*//')
 # remove the gibberish kde4-...Application.. from kde4 application names
 open_prog=$(echo $open_prog | sed 's/kde4-\(.*\)Application.*/\1/')
 
-${open_prog} "$dst_file"
+if  [ -x "$(which "${open_prog}")" ]
+then
+    ${open_prog} "$dst_file"
+else
+    # fallback to xdg-open
+    printf "Invalid app %s - falling back to xdg-open\n" "${open_prog}"
+    xdg-open "$dst_file"
+fi
 
 # Make sure I delete the destination file
 printf "Removing output file...\n"
