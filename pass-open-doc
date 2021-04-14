@@ -127,7 +127,7 @@ root="$HOME/.password-store/"
 
 gpg_prog="$(which gpg)"
 recipient=$(cat "$root/.gpg-id")
-dst_file="/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)"
+dst_file="/tmp/pass-$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)"
 
 open_prog=
 del_prog=
@@ -155,12 +155,12 @@ fi
 # Decrypt
 ${gpg_prog} --recipient "$recipient" --decrypt  --output "$dst_file" "$fpath"
 
-xdg-open "$dst_file"
-read -r  # wait for user to return
+xdg-open "$dst_file" &
+wait
 
 # Make sure I delete the destination file
-printf "Removing output file...\n"
+printf "Removing output file... [$dst_file]"
 ${del_prog} ${del_prog_flags} "$dst_file"
-printf "Done!\n"
+echo "Done!"
 exit 0
 # ] <-- needed because of Argbash
