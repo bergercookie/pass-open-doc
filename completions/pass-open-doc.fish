@@ -1,7 +1,6 @@
 #!/usr/bin/env fish
-
-# Copyright (C) 2012-2014 Dmitry Medvinsky <me@dmedvinsky.name>. All Rights Reserved.
-# This file is licensed under the GPLv2+. Please see COPYING for more information.
+# Originally found in the password-store repo.
+https://github.com/zx2c4/password-store/blob/master/src/completion/pass.fish-completion
 
 set PROG 'pass-open-doc'
 
