@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 # Originally found in the password-store repo.
-https://github.com/zx2c4/password-store/blob/master/src/completion/pass.fish-completion
+# https://github.com/zx2c4/password-store/blob/master/src/completion/pass.fish-completion
 
 set PROG 'pass-open-doc'
 
